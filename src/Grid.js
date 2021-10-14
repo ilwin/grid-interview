@@ -4,19 +4,24 @@ const Grid = ({ config, data }) => (
   <table>
     <thead>
     <tr>
-      <th>Col 1</th>
-      <th>Col 2</th>
+      {config.map(( {title, ...confs}, ind ) => (
+        <th key={ ind } >{ title }</th>
+        )
+      )}
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
-    </tr>
-    <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
-    </tr>
+      {data.map(dataSet => (
+        <tr key={ dataSet.imdbID }>
+          {config.map(( {component, field, ...confs} , ind ) => {
+              const Component = component ? component : null;
+              return  (component 
+                ? <td key={ ind }><Component data={dataSet[field]} /></td>
+                : <td key={ ind }>{ dataSet[field] }</td>)
+            }
+          )}
+        </tr>
+      ))}
     </tbody>
   </table>
 );
